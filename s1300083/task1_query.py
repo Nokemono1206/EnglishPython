@@ -63,7 +63,7 @@ def upload_file(path: str, cur: sqlite3.Cursor) -> bool:
         else:
             print("Would you like to give a new name?(y/n)")
             if input() == 'y':
-                name = get_new_name()
+                name = get_new_name(cur)
         cur.execute("INSERT INTO items (content, original_name, name) VALUES(?,?,?)", (content, f.name, name))
         return True
             
@@ -108,7 +108,7 @@ def rename(current: str, new: str, cur: sqlite3.Cursor) -> None:
     if not find(current, cur):
         return
     new = get_new_name(cur, new)
-    cur.execute("UPDATE items SET new_name = ? WHERE new_name = ?", (new, current))
+    cur.execute("UPDATE items SET name = ? WHERE name = ?", (new, current))
     print(f"Renamed {current} to {new}.")
 
 
@@ -133,7 +133,7 @@ while True:
         if find(query[1], cur):
             print("File found. Would you like to review the content?(y/n)")
             if input() == 'y':
-                cur.execute(f"SELECT content FROM items WHERE new_name = ?", (query[1],))
+                cur.execute(f"SELECT content FROM items WHERE name = ?", (query[1],))
                 print(cur.fetchall())
     elif query[0] == "rename":
         # rename current_name new_name
@@ -142,7 +142,7 @@ while True:
     elif query[0] == "delete":
         # delete name
         if(find(query[1], cur)):
-            cur.execute(f"DELETE FROM items WHERE new_name = ?", (query[1],))
+            cur.execute(f"DELETE FROM items WHERE name = ?", (query[1],))
             conn.commit()
             print(f"Deleted '{query[1]}'")
     else:
