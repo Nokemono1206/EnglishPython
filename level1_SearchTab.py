@@ -2,11 +2,13 @@
 
 #import
 
+#Matsuda turn start
 try:
     FileName = input("Please input the file name to check (only .txt file!): ")
     print("The text file is " + '"' + FileName + '"')
 except KeyboardInterrupt:
     print("\nCtrl+C detected. Program terminated.")
+#Matsuda turn end
 
 SearchingWord = input("Please input the searching word: ")
 print("The searching word is " + '"' + SearchingWord + '"')
@@ -15,6 +17,18 @@ FilePath = '/Network/Servers/stdfsv1/vol/vol7/home3/s1300079/AAuP/' + FileName
 print(FilePath)
 
 f = open(FilePath)
+
+sf =fr.split()
+
+rsf = []
+
+for word in sf:
+    rsf.append(word.replace(',', ''))
+
+for i in range(len(rsf) - 1):
+    rsf[i] = rsf[i].replace('.', '')
+
+print(rsf)
 
 fr = f.read()
 
