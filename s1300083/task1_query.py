@@ -121,8 +121,8 @@ while True:
     print("Input a command.\n>", end="")
     query = input().split(" ")
     if query[0] == "help":
-        print("exit:Shut down the system.\nupload(filename):Upload file.\n")
-        print("find(target):Find the file which conclude target.\nrename(target)(newname):Change the filename (target) to (newname)\n")
+        print("exit:Shut down the system.\nupload(filename):Upload file.")
+        print("find(target):Find the file which include target.\nrename(target)(newname):Change the filename (target) to (newname)")
         print("delete(target):Delete the file")
     elif query[0] == "exit":
         exit()
