@@ -3,11 +3,13 @@
 #import
 
 #Matsuda turn start
-try:
+while True:
     FileName = input("Please input the file name to check (only .txt file!): ")
-    print("The text file is " + '"' + FileName + '"')
-except KeyboardInterrupt:
-    print("\nCtrl+C detected. Program terminated.")
+    if FileName.endswith('.txt'):
+        print("The text file is " + '"' + FileName + '"')
+        break
+    else:
+        print("Invalid file extension. Please input a .txt file.")
 #Matsuda turn end
 
 SearchingWord = input("Please input the searching word: ")
