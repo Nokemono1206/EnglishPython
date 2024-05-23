@@ -1,30 +1,24 @@
 import re
+from collections import Counter
 
-# Read file and create a dictionary of {"word", "count"}.
-def get_words(filepath) -> dict:
+# Read file and return a list of words in the file.
+def get_words(filepath) -> list:
     with open(filepath) as f:
         words = f.read()
         words = re.split("[.,\s]", words)
-        result = dict()
-        for w in words:
-            if not w:
-                continue
-            if w in result.keys():
-                result[w] = result[w]+1
-            else:
-                result[w] = 1
-        return result
+        words = [x for x in words if x]
+        return words
 
 # path of Q and K texts.
 Q_path = "Q.txt"
 K_path = "K.txt"
 
 q_words = get_words(Q_path)
-q_freq = sorted(q_words.items(), key=lambda x: x[1], reverse=True)
+q_freq = Counter(q_words).most_common()
 k_words = get_words(K_path)
-k_freq = sorted(k_words.items(), key=lambda x: x[1], reverse=True)
+k_freq = Counter(k_words).most_common()
 # Space between Q and K in display.
-span = max(map(len, q_words.keys()))+9
+span = max(map(len, q_words))+9
 
 print(f"Rank\tQ{str.join('', [' ']*span)}K")
 i = 0
