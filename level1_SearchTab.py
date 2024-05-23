@@ -1,16 +1,36 @@
-#coding: utf-8
+# coding: utf-8
 
 import datetime
 
-#Matsuda turn start
+now = datetime.datetime.now()
+
+print("Please input the file name to check(only .txt file!).")
+print("If you retry input the file name, please push Ctrl+c!")
+
 while True:
-    FileName = input("Please input the file name to check (only .txt file!): ")
-    if FileName.endswith('.txt'):
-        print("The text file is " + '"' + FileName + '"')
-        break
-    else:
-        print("Invalid file extension. Please input a .txt file.")
-#Matsuda turn end
+    try:
+        FileName = input("Input File: ")
+        if FileName.endswith('.txt'):
+            print("The text file is " + '"' + FileName + '"' +
+                  ", this file exist.")
+            FilePath = '/home/student/s1300079/AAuP/' + FileName
+            f = open(FilePath)
+            break
+        else:
+            print("Please input .txt file.")
+            continue
+    except KeyboardInterrupt:
+        print("\nPlease retry inputting the file name.")
+        continue
+    except FileNotFoundError:
+        print("Not exist the File! Please retry.")
+        continue
+
+# search FilePath(it is different on the computer, so, please change it!)
+# This is Mac FilePath
+# FilePath = '/Network/Servers/stdfsv1/vol/vol7/home3/s1300079/AAuP/' + FileName
+# This is Linux FilePath
+# FilePath = '/home/student/s1300079/AAuP/' + FileName
 
 # input to search words
 SearchingWord = input("Please input the searching word: ")
@@ -19,20 +39,14 @@ print("The searching word is " + '"' + SearchingWord + '"')
 # get Filename except .txt
 PreFileName = FileName.replace('.txt', '')
 
-# search FilePath(it is different on the computer, so, please change it!)
-# This is Mac FilePath
-# FilePath = '/Network/Servers/stdfsv1/vol/vol7/home3/s1300079/AAuP/' + FileName
-# This is Linux FilePath
-FilePath = '/home/student/s1300079/AAuP/' + FileName
-
 # opening file
-f = open(FilePath)
+#f = open(FilePath)
 #fout = open('/Network/Servers/stdfsv1/vol/vol7/home3/s1300079/AAuP/result.txt', 'w')
 #fout = open('/home/student/s1300079/AAuP/result.txt', 'w')
-fout = open('/home/student/s1300079/AAuP/' + PreFileName + '_' + 
-            str(now.year) + '-' + str(now.month) + '-' + str(now.day) + '_' + 
-            str(now.hour) + ':' + str(now.minute) + ':' + str(now.second) + 
-            '.txt', 'w') # Filename with now time
+fout = open('/home/student/s1300079/AAuP/' + PreFileName + '_'
+            + SearchingWord + '_' + str(now.year) + '-' + str(now.month)
+            + '-' + str(now.day) + '_' + str(now.hour) + '.' + str(now.minute)
+            + '.' + str(now.second) + '.txt', 'w') # Filename with now time
 
 fr = f.read()
 
@@ -73,7 +87,7 @@ for i in range(len(rsf) - 1):
             if s >= len(rsf):
                 break
             if s == WordsNum:
-                fout.write('*{[' + rsf[s] + ']}*' + ' ')
+                fout.write(' *{[' + rsf[s] + ']}* ' + ' ')
             elif (s == (WordsNum + 5)) or (s == len(rsf) - 1):
                 fout.write(rsf[s] + '\n')
             elif (s == 0) or (s == WordsNum - 5):
