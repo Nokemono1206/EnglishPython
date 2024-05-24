@@ -1,27 +1,28 @@
 # coding: utf-8
 
 import datetime
+import sys
 
 now = datetime.datetime.now()
 
 print("Please input the file name to check(only .txt file!).")
-print("If you retry input the file name, please push Ctrl+c!")
+print("If you retry input the file name, please push Enter")
 
 while True:
     try:
         FileName = input("Input File: ")
         if FileName.endswith('.txt'):
-            print("The text file is " + '"' + FileName + '"' +
-                  ", this file exist.")
+            # You must change path on your computer
             FilePath = '/home/student/s1300079/AAuP/' + FileName
             f = open(FilePath)
+            print("The text file is " + '"' + FileName + '"' + ", this file exist.")
             break
         else:
             print("Please input .txt file.")
             continue
     except KeyboardInterrupt:
-        print("\nPlease retry inputting the file name.")
-        continue
+        print("\nCtrl+c is detected. Finish, bye!!")
+        sys.exit()
     except FileNotFoundError:
         print("Not exist the File! Please retry.")
         continue
@@ -46,7 +47,7 @@ PreFileName = FileName.replace('.txt', '')
 fout = open('/home/student/s1300079/AAuP/' + PreFileName + '_'
             + SearchingWord + '_' + str(now.year) + '-' + str(now.month)
             + '-' + str(now.day) + '_' + str(now.hour) + '.' + str(now.minute)
-            + '.' + str(now.second) + '.txt', 'w') # Filename with now time
+            + '.' + str(now.second) + '.txt', 'w') # Filename with FileName, SearchingWord, and now time.
 
 fr = f.read()
 
@@ -79,7 +80,7 @@ for i in range(len(rsf) - 1):
 
         WordsNum = i
 
-        for j in range(-5, 6): # print 5 words before and after
+        for j in range(-5, 6): # printout to .txt file 5 words before and after
             s = WordsNum + j
             # first, write to new .txt file
             if s < 0:
