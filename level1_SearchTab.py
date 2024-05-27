@@ -14,7 +14,10 @@ while True:
         if FileName.endswith('.txt'):
             print("The text file is " + '"' + FileName + '"' +
                   ", this file exist.")
+            # search FilePath(it is different on the computer, so, please change it!)
             FilePath = '/home/student/s1300079/AAuP/' + FileName
+            # get Filename except .txt
+            PreFileName = FileName.replace('.txt', '')
             f = open(FilePath)
             break
         else:
@@ -26,28 +29,6 @@ while True:
     except FileNotFoundError:
         print("Not exist the File! Please retry.")
         continue
-
-# search FilePath(it is different on the computer, so, please change it!)
-# This is Mac FilePath
-# FilePath = '/Network/Servers/stdfsv1/vol/vol7/home3/s1300079/AAuP/' + FileName
-# This is Linux FilePath
-# FilePath = '/home/student/s1300079/AAuP/' + FileName
-
-# input to search words
-SearchingWord = input("Please input the searching word: ")
-print("The searching word is " + '"' + SearchingWord + '"')
-
-# get Filename except .txt
-PreFileName = FileName.replace('.txt', '')
-
-# opening file
-#f = open(FilePath)
-#fout = open('/Network/Servers/stdfsv1/vol/vol7/home3/s1300079/AAuP/result.txt', 'w')
-#fout = open('/home/student/s1300079/AAuP/result.txt', 'w')
-fout = open('/home/student/s1300079/AAuP/' + PreFileName + '_'
-            + SearchingWord + '_' + str(now.year) + '-' + str(now.month)
-            + '-' + str(now.day) + '_' + str(now.hour) + '.' + str(now.minute)
-            + '.' + str(now.second) + '.txt', 'w') # Filename with now time
 
 fr = f.read()
 
@@ -65,10 +46,21 @@ for i in range(len(rsf)):
 
 TotalWords = i
 
-# if SearchingWord is not exist in the txt file, print 'Not Found'
+# input to search words
+SearchingWord = input("Please input the searching word: ")
+print("The searching word is " + '"' + SearchingWord + '"')
+
+# if SearchingWord is not exist in the txt file, print 'Not Found', and terminate program
 if fr.find(SearchingWord) == -1:
     print("Not found " + '"' + SearchingWord + '"' + " !")
-    
+    sys.exit()
+
+# opening file
+fout = open('/home/student/s1300079/AAuP/' + PreFileName + '_'
+            + SearchingWord + '_' + str(now.year) + '-' + str(now.month)
+            + '-' + str(now.day) + '_' + str(now.hour) + '.' + str(now.minute)
+            + '.' + str(now.second) + '.txt', 'w') # Filename with now time
+
 k = 0
 flag = 0
 
@@ -94,10 +86,10 @@ for i in range(len(rsf) - 1):
             elif (s == (WordsNum + 5)) or (s == len(rsf) - 1):
                 fout.write(rsf[s] + '\n')
             elif (s == 0) or (s == WordsNum - 5):
-                fout.write(str(k) + '. ' + rsf[s] + ' ')    
+                fout.write(str(k) + '. ' + rsf[s] + ' ')
             else:
                 fout.write(rsf[s] + ' ')
-                
+
             # next, print in the terminal(Changing colour!)
             if s == WordsNum:
                 print('\033[1m' + '\033[4m' + '\033[34m' + rsf[s] + '\033[0m', end = ', ')
@@ -110,6 +102,6 @@ for i in range(len(rsf) - 1):
 
 Preratio = k/TotalWords
 Rratio = round(Preratio, 3)
-ratio = Rratio * 100
+ratio = round(Rratio * 100, 3)
 print("The ratio of " + '"' + SearchingWord + '"' +
       " = " + str(ratio) + "%")
