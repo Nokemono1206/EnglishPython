@@ -6,22 +6,22 @@ import sys
 now = datetime.datetime.now()
 
 print("Please input the file name to check(only .txt file!).")
-print("If you retry input the file name, please push Enter")
+print("If you retry input the file name, please push Ctrl+c")
 
 while True:
     try:
         FileName = input("Input File: ")
         if FileName.endswith('.txt'):
-            # You must change path on your computer
+            print("The text file is " + '"' + FileName + '"' +
+                  ", this file exist.")
             FilePath = '/home/student/s1300079/AAuP/' + FileName
             f = open(FilePath)
-            print("The text file is " + '"' + FileName + '"' + ", this file exist.")
             break
         else:
-            print("Please input .txt file.")
+            print("Please retry(maybe, only .txt can received, so please careful).")
             continue
     except KeyboardInterrupt:
-        print("\nCtrl+c is detected. Finish, bye!!")
+        print("\nCtrl+c is detected. Finish, bye!")
         sys.exit()
     except FileNotFoundError:
         print("Not exist the File! Please retry.")
@@ -47,7 +47,7 @@ PreFileName = FileName.replace('.txt', '')
 fout = open('/home/student/s1300079/AAuP/' + PreFileName + '_'
             + SearchingWord + '_' + str(now.year) + '-' + str(now.month)
             + '-' + str(now.day) + '_' + str(now.hour) + '.' + str(now.minute)
-            + '.' + str(now.second) + '.txt', 'w') # Filename with FileName, SearchingWord, and now time.
+            + '.' + str(now.second) + '.txt', 'w') # Filename with now time
 
 fr = f.read()
 
@@ -62,6 +62,8 @@ for word in sf:
 # except . of words
 for i in range(len(rsf)):
     rsf[i] = rsf[i].replace('.', '')
+
+TotalWords = i
 
 # if SearchingWord is not exist in the txt file, print 'Not Found'
 if fr.find(SearchingWord) == -1:
@@ -80,7 +82,7 @@ for i in range(len(rsf) - 1):
 
         WordsNum = i
 
-        for j in range(-5, 6): # printout to .txt file 5 words before and after
+        for j in range(-5, 6): # print 5 words before and after
             s = WordsNum + j
             # first, write to new .txt file
             if s < 0:
@@ -105,3 +107,9 @@ for i in range(len(rsf) - 1):
                 print(str(k) + '. ' + '\033[31m' + rsf[s] + '\033[0m', end = ', ')
             else:
                 print('\033[31m' + rsf[s] + '\033[0m', end = ', ')
+
+Preratio = k/TotalWords
+Rratio = round(Preratio, 3)
+ratio = Rratio * 100
+print("The ratio of " + '"' + SearchingWord + '"' +
+      " = " + str(ratio) + "%")
