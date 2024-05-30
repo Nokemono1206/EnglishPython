@@ -2,8 +2,10 @@
 
 import datetime
 import sys
+import os
 
 now = datetime.datetime.now()
+CurrentPath = os.getcwd()
 
 print("Please input the file name to check(only .txt file!).")
 print("If you retry input the file name, please push Ctrl+c")
@@ -14,8 +16,8 @@ while True:
         if FileName.endswith('.txt'):
             print("The text file is " + '"' + FileName + '"' +
                   ", this file exist.")
-            # search FilePath(it is different on the computer, so, please change it!)
-            FilePath = '/home/student/s1300079/AAuP/' + FileName
+            # search FilePath
+            FilePath = CurrentPath + '/' + FileName
             # get Filename except .txt
             PreFileName = FileName.replace('.txt', '')
             f = open(FilePath)
@@ -56,7 +58,7 @@ if fr.find(SearchingWord) == -1:
     sys.exit()
 
 # opening file
-fout = open('/home/student/s1300079/AAuP/' + PreFileName + '_'
+fout = open(CurrentPath + '/' + PreFileName + '_'
             + SearchingWord + '_' + str(now.year) + '-' + str(now.month)
             + '-' + str(now.day) + '_' + str(now.hour) + '.' + str(now.minute)
             + '.' + str(now.second) + '.txt', 'w') # Filename with now time
